@@ -10,6 +10,7 @@ soon :)
 
 ## Project's stages overview👀:
 <details><summary>Click to expand</summary>
+
 ### Stage 1/6 Blockchain essentials
 ##### Description
 Blockchain has a simple interpretation: it's just a chain of blocks. It represents a sequence of data that you can't break in the middle; you can only append new data at the end of it. All the blocks in the blockchain are chained together.
