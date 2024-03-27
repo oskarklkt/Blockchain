@@ -23,6 +23,6 @@ public class Main {
       threads.add(thread);
     }
     threads.forEach(Thread::start);
-    threads.forEach(Thread::interrupt);
+    threads.forEach(Thread::join);
   }
 }
