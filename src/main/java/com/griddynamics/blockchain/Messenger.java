@@ -22,11 +22,12 @@ public class Messenger implements Runnable {
       if (Blockchain.getInstance().getBlocks().size() == AppConstants.NUMBER_OF_BLOCKS - 1) {
         break;
       }
-      Thread.sleep(40);
+      Thread.sleep(50);
     }
   }
 
   public static void clearMessages() {
     messages = new ArrayList<>();
   }
+
 }
