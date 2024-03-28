@@ -5,9 +5,9 @@ public abstract class AppConstants {
   public static final String CHARSET = "UTF-8";
   public static final String ZERO = "0";
 
-  public static final Integer NUMBER_OF_BLOCKS = 5;
+  public static final Integer NUMBER_OF_BLOCKS = 7;
 
-  public static final Integer NUMBER_OF_MINERS = 7;
+  public static final Integer NUMBER_OF_MINERS = 10;
 
   public static final Integer NUMBER_OF_MESSAGES = 10;
   public static final Integer SECONDS_TO_GENERATE_INCREASE = 10;

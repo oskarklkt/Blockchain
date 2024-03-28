@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
-  @SneakyThrows
+    @SneakyThrows
   public static void main(String[] args) {
     Thread messenger = new Thread(new Messenger());
     messenger.start();
-    List<Thread> threads = new ArrayList<>();
+        List<Thread> threads = new ArrayList<>();
     for (int i = 0; i < AppConstants.NUMBER_OF_MINERS; i++) {
       Thread thread =
           new Thread(

@@ -27,13 +27,15 @@ public class Block {
       String previousBlockHash,
       String hash,
       long magicNumber,
-      long id) {
+      long id,
+      long secondsToGenerate) {
     this.minerId = minerId;
     this.id = id;
     this.timeStamp = timeStamp;
     this.previousBlockHash = previousBlockHash;
     this.hash = hash;
     this.magicNumber = magicNumber;
+    this.secondsToGenerate = secondsToGenerate;
   }
 
   @Override

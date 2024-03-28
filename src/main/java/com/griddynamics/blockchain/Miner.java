@@ -18,7 +18,6 @@ import java.util.Random;
 public class Miner implements Runnable {
   private static long numberOfMiners = 1;
   private final long id;
-
   public static List<String> usedMessages = new ArrayList<>();
   private final Blockchain blockchain;
   private final BlockchainController controller;
@@ -33,24 +32,26 @@ public class Miner implements Runnable {
   @SneakyThrows
   public synchronized void run() {
     while (!blockchain.isBlockchainFull()) {
-      long startTime = LocalTime.now().getSecond();
       long timeStamp = new Date().getTime();
-      long magicNumber;
+      long magicNumber = 0;
       long blockId = blockchain.getBlocks().size() + 1;
-      String hash;
+      String hash = null;
       String previousBlockHash =
           blockchain.getBlocks().isEmpty()
               ? AppConstants.ZERO
               : blockchain.getBlocks().get(blockchain.getBlocks().size() - 1).getHash();
+      long startTime = LocalTime.now().getSecond();
       do {
+        if (blockchain.isBlockchainFull()) {
+          break;
+        }
         magicNumber = new Random().nextInt();
         hash =
             StringUtil.applySha256(
                 previousBlockHash + blockId + magicNumber + timeStamp + startTime);
       } while (!hash.startsWith(AppConstants.ZERO.repeat(blockchain.getRequiredTrailingZeros())));
-      Thread.sleep(20);
       MinersManager.mine(
-          this, new Block(id, timeStamp, previousBlockHash, hash, magicNumber, blockId));
+          this, new Block(id, timeStamp, previousBlockHash, hash, magicNumber, blockId, Math.abs(LocalTime.now().getSecond() - startTime)));
     }
   }
 }
