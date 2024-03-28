@@ -6,6 +6,7 @@
 
 <details><summary>Click to expand</summary>
 Just run the Main class 
+Play with AppConstants class where you can change number of miners, blocks to mine or messages
 </details>
 
 ## Project's stages overview👀:
