@@ -27,13 +27,13 @@ public class Blockchain {
     return instance;
   }
 
-    public void increaseRequiredTrailingZeros() {
-        requiredTrailingZeros++;
-    }
+  public void increaseRequiredTrailingZeros() {
+    requiredTrailingZeros++;
+  }
 
-    public void decreaseRequiredTrailingZeros() {
-        requiredTrailingZeros--;
-    }
+  public void decreaseRequiredTrailingZeros() {
+    requiredTrailingZeros--;
+  }
 
   @Override
   public String toString() {

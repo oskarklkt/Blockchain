@@ -6,12 +6,16 @@ import com.griddynamics.blockchain.constant.AppConstants;
 import com.griddynamics.blockchain.controllers.BlockchainController;
 import com.griddynamics.blockchain.utils.StringUtil;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Getter
+@Setter
 public class Miner implements Runnable {
   private static long numberOfMiners = 1;
   private final long id;
@@ -26,6 +30,7 @@ public class Miner implements Runnable {
   }
 
   @Override
+  @SneakyThrows
   public synchronized void run() {
     while (!Blockchain.getInstance().isBlockchainFull()) {
       long startTime = LocalTime.now().getSecond();
@@ -45,9 +50,17 @@ public class Miner implements Runnable {
         hash =
             StringUtil.applySha256(
                 String.valueOf(id) + timeStamp + previousBlockHash + magicNumber + id);
+
       } while (!hash.startsWith(requiredBeginningOfHash.toString()));
+      List<String> messages = Messenger.messages;
       Block block = new Block(id, timeStamp, previousBlockHash, hash, magicNumber);
       block.setSecondsToGenerate(Math.abs(LocalTime.now().getSecond() - startTime));
+      if (block.getId() == 1) {
+        block.setMessages(null);
+      } else {
+        block.setMessages(messages);
+        Messenger.clearMessages();
+      }
       MinersManager.mine(this, block);
     }
   }
