@@ -7,7 +7,21 @@ public abstract class AppConstants {
 
   public static final Integer NUMBER_OF_BLOCKS = 5;
 
-  public static final Integer NUMBER_OF_MINERS = 2;
+  public static final Integer NUMBER_OF_MINERS = 7;
 
-  public static final Integer NUMBER_OF_MESSAGES = 25;
+  public static final Integer NUMBER_OF_MESSAGES = 10;
+  public static final String BLOCK_TO_STRING =
+      """
+                Block:
+                Created by miner # %d
+                Id: %d
+                Timestamp: %d
+                Magic number: %d
+                Hash of the previous block:
+                %s
+                Hash of the block:
+                %s
+                Block data: %s
+                Block was generating for %d seconds
+                """;
 }

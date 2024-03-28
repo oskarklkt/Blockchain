@@ -1,23 +1,31 @@
 package com.griddynamics.blockchain.controllers;
 
+import com.griddynamics.blockchain.Messenger;
 import com.griddynamics.blockchain.block.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
 import com.griddynamics.blockchain.constant.AppConstants;
 import com.griddynamics.blockchain.constant.OutputMessages;
 import com.griddynamics.blockchain.validators.BlockchainValidator;
+import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@AllArgsConstructor
 public class BlockchainController {
   private final Blockchain blockchain;
   private final BlockchainValidator validator;
-
-  public BlockchainController(Blockchain blockchain, BlockchainValidator validator) {
-    this.blockchain = blockchain;
-    this.validator = validator;
-  }
+  public static List<String> usedMessages = Collections.synchronizedList(new ArrayList<>());
 
   public synchronized void addNewBlock(Block block) {
     if (validator.validateNewBlock(block)) {
-      blockchain.getBlocks().add(block);
+      if (block.getId() == 1) {
+        block.setMessages(null);
+      } else {
+        Messenger.getMessages(block, usedMessages);
+        usedMessages.addAll(block.getMessages());
+      }
       System.out.print(block);
       if (block.getSecondsToGenerate() < 10) {
         blockchain.increaseRequiredTrailingZeros();
@@ -31,6 +39,7 @@ public class BlockchainController {
         System.out.println(OutputMessages.N_STAYS_THE_SAME);
         System.out.print(System.lineSeparator());
       }
+      blockchain.getBlocks().add(block);
     }
     if (blockchain.getBlocks().size() == AppConstants.NUMBER_OF_BLOCKS) {
       blockchain.setBlockchainFull(true);

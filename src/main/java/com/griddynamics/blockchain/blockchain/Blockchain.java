@@ -13,7 +13,7 @@ public class Blockchain {
   private final List<Block> blocks;
   private boolean isBlockchainFull = false;
   private static Blockchain instance;
-  public int requiredTrailingZeros;
+  public volatile int requiredTrailingZeros;
 
   private Blockchain() {
     this.blocks = new ArrayList<>();
@@ -27,11 +27,15 @@ public class Blockchain {
     return instance;
   }
 
-  public void increaseRequiredTrailingZeros() {
+  public synchronized List<Block> getBlocks() {
+    return blocks;
+  }
+
+  public synchronized void increaseRequiredTrailingZeros() {
     requiredTrailingZeros++;
   }
 
-  public void decreaseRequiredTrailingZeros() {
+  public synchronized void decreaseRequiredTrailingZeros() {
     requiredTrailingZeros--;
   }
 

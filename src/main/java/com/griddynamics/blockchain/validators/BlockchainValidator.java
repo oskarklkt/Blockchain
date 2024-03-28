@@ -16,6 +16,9 @@ public class BlockchainValidator {
         blockchain.getBlocks().isEmpty()
             ? AppConstants.ZERO
             : blockchain.getBlocks().get(blockchain.getBlocks().size() - 1).getHash();
+      if (!block.getHash().startsWith(AppConstants.ZERO.repeat(blockchain.requiredTrailingZeros))) {
+        return false;
+      }
     return previousBlockHash.equals(block.getPreviousBlockHash());
   }
 }

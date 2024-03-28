@@ -1,7 +1,6 @@
 package com.griddynamics.blockchain.block;
 
-import com.griddynamics.blockchain.blockchain.Blockchain;
-import com.griddynamics.blockchain.constant.OutputMessages;
+import com.griddynamics.blockchain.constant.AppConstants;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +22,14 @@ public class Block {
   private List<String> messages;
 
   public Block(
-      long minerId, long timeStamp, String previousBlockHash, String hash, long magicNumber) {
+      long minerId,
+      long timeStamp,
+      String previousBlockHash,
+      String hash,
+      long magicNumber,
+      long id) {
     this.minerId = minerId;
-    this.id = Blockchain.getInstance().getBlocks().size() + 1;
+    this.id = id;
     this.timeStamp = timeStamp;
     this.previousBlockHash = previousBlockHash;
     this.hash = hash;
@@ -45,7 +49,7 @@ public class Block {
     }
     String data = stringBuilder.toString();
     return String.format(
-        OutputMessages.BLOCK_TO_STRING,
+        AppConstants.BLOCK_TO_STRING,
         minerId,
         id,
         timeStamp,
