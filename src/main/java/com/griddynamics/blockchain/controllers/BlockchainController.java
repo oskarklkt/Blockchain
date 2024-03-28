@@ -27,11 +27,12 @@ public class BlockchainController {
         usedMessages.addAll(block.getMessages());
       }
       System.out.print(block);
-      if (block.getSecondsToGenerate() < 10) {
+      if (block.getSecondsToGenerate() < AppConstants.SECONDS_TO_GENERATE_INCREASE) {
         blockchain.increaseRequiredTrailingZeros();
         System.out.println(OutputMessages.N_INCREASED + blockchain.getRequiredTrailingZeros());
         System.out.print(System.lineSeparator());
-      } else if (block.getSecondsToGenerate() > 60 && blockchain.getRequiredTrailingZeros() > 0) {
+      } else if (block.getSecondsToGenerate() > AppConstants.SECONDS_TO_GENERATE_DECREASE
+              && blockchain.getRequiredTrailingZeros() > 0) {
         blockchain.decreaseRequiredTrailingZeros();
         System.out.println(OutputMessages.N_DECREASED + blockchain.getRequiredTrailingZeros());
         System.out.print(System.lineSeparator());

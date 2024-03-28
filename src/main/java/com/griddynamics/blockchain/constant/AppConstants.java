@@ -10,6 +10,9 @@ public abstract class AppConstants {
   public static final Integer NUMBER_OF_MINERS = 7;
 
   public static final Integer NUMBER_OF_MESSAGES = 10;
+  public static final Integer SECONDS_TO_GENERATE_INCREASE = 10;
+  public static final Integer SECONDS_TO_GENERATE_DECREASE = 60;
+
   public static final String BLOCK_TO_STRING =
       """
                 Block:
