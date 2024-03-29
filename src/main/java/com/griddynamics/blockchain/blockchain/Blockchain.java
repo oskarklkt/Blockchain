@@ -1,19 +1,18 @@
 package com.griddynamics.blockchain.blockchain;
 
-import com.griddynamics.blockchain.block.Block;
+import com.griddynamics.blockchain.pojos.Block;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 public class Blockchain {
   private final List<Block> blocks;
   private boolean isBlockchainFull = false;
   private static Blockchain instance;
-  public volatile int requiredTrailingZeros;
+  public int requiredTrailingZeros;
 
   private Blockchain() {
     this.blocks = new ArrayList<>();
@@ -27,15 +26,11 @@ public class Blockchain {
     return instance;
   }
 
-  public synchronized List<Block> getBlocks() {
-    return blocks;
-  }
-
-  public synchronized void increaseRequiredTrailingZeros() {
+  public void increaseRequiredTrailingZeros() {
     requiredTrailingZeros++;
   }
 
-  public synchronized void decreaseRequiredTrailingZeros() {
+  public void decreaseRequiredTrailingZeros() {
     requiredTrailingZeros--;
   }
 

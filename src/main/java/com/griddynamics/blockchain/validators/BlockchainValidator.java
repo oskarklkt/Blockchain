@@ -1,8 +1,8 @@
 package com.griddynamics.blockchain.validators;
 
-import com.griddynamics.blockchain.block.Block;
+import com.griddynamics.blockchain.pojos.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
-import com.griddynamics.blockchain.constant.AppConstants;
+import com.griddynamics.blockchain.constants.AppConstants;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -14,9 +14,6 @@ public class BlockchainValidator {
         blockchain.getBlocks().isEmpty()
             ? AppConstants.ZERO
             : blockchain.getBlocks().get(blockchain.getBlocks().size() - 1).getHash();
-    if (!block.getHash().startsWith(AppConstants.ZERO.repeat(blockchain.requiredTrailingZeros))) {
-      return false;
-    }
     return previousBlockHash.equals(block.getPreviousBlockHash());
   }
 }

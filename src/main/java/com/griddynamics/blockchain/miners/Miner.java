@@ -1,24 +1,24 @@
-package com.griddynamics.blockchain;
+package com.griddynamics.blockchain.miners;
 
-import com.griddynamics.blockchain.block.Block;
+import com.griddynamics.blockchain.pojos.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
-import com.griddynamics.blockchain.constant.AppConstants;
+import com.griddynamics.blockchain.constants.AppConstants;
 import com.griddynamics.blockchain.controllers.BlockchainController;
 import com.griddynamics.blockchain.utils.StringUtil;
 import lombok.Getter;
-import lombok.SneakyThrows;
+import lombok.Setter;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 @Getter
+@Setter
 public class Miner implements Runnable {
   private static long numberOfMiners = 1;
   private final long id;
-  public static List<String> usedMessages = new ArrayList<>();
+  public final static List<String> usedMessages = new ArrayList<>();
   private final Blockchain blockchain;
   private final BlockchainController controller;
 
@@ -29,29 +29,30 @@ public class Miner implements Runnable {
   }
 
   @Override
-  @SneakyThrows
   public synchronized void run() {
     while (!blockchain.isBlockchainFull()) {
       long timeStamp = new Date().getTime();
-      long magicNumber = 0;
+      long magicNumber;
       long blockId = blockchain.getBlocks().size() + 1;
-      String hash = null;
+      String hash;
       String previousBlockHash =
           blockchain.getBlocks().isEmpty()
               ? AppConstants.ZERO
               : blockchain.getBlocks().get(blockchain.getBlocks().size() - 1).getHash();
-      long startTime = LocalTime.now().getSecond();
       do {
-        if (blockchain.isBlockchainFull()) {
-          break;
-        }
         magicNumber = new Random().nextInt();
-        hash =
-            StringUtil.applySha256(
-                previousBlockHash + blockId + magicNumber + timeStamp + startTime);
+        hash = StringUtil.applySha256(previousBlockHash + blockId + magicNumber + timeStamp);
       } while (!hash.startsWith(AppConstants.ZERO.repeat(blockchain.getRequiredTrailingZeros())));
       MinersManager.mine(
-          this, new Block(id, timeStamp, previousBlockHash, hash, magicNumber, blockId, Math.abs(LocalTime.now().getSecond() - startTime)));
+          this,
+          new Block(
+              id,
+              timeStamp,
+              previousBlockHash,
+              hash,
+              magicNumber,
+              blockId,
+              (-1) * (timeStamp - new Date().getTime()) / 1000));
     }
   }
 }

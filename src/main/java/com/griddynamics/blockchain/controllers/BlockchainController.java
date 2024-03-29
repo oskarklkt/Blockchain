@@ -1,11 +1,11 @@
 package com.griddynamics.blockchain.controllers;
 
-
-import com.griddynamics.blockchain.Messenger;
-import com.griddynamics.blockchain.block.Block;
+import com.griddynamics.blockchain.messages.Messenger;
+import com.griddynamics.blockchain.pojos.User;
+import com.griddynamics.blockchain.pojos.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
-import com.griddynamics.blockchain.constant.AppConstants;
-import com.griddynamics.blockchain.constant.OutputMessages;
+import com.griddynamics.blockchain.constants.AppConstants;
+import com.griddynamics.blockchain.constants.OutputMessages;
 import com.griddynamics.blockchain.validators.BlockchainValidator;
 import lombok.AllArgsConstructor;
 
@@ -28,12 +28,13 @@ public class BlockchainController {
         usedMessages.addAll(block.getMessages());
       }
       System.out.print(block);
-      if (block.getSecondsToGenerate() < AppConstants.SECONDS_TO_GENERATE_INCREASE) {
+      if (block.getSecondsToGenerate() < AppConstants.SECONDS_TO_GENERATE_INCREASE
+          && blockchain.getRequiredTrailingZeros() <= AppConstants.BARRIER) {
         blockchain.increaseRequiredTrailingZeros();
         System.out.println(OutputMessages.N_INCREASED + blockchain.getRequiredTrailingZeros());
         System.out.print(System.lineSeparator());
       } else if (block.getSecondsToGenerate() > AppConstants.SECONDS_TO_GENERATE_DECREASE
-              && blockchain.getRequiredTrailingZeros() > 0) {
+          && blockchain.getRequiredTrailingZeros() > 0) {
         blockchain.decreaseRequiredTrailingZeros();
         System.out.println(OutputMessages.N_DECREASED + blockchain.getRequiredTrailingZeros());
         System.out.print(System.lineSeparator());
@@ -42,9 +43,11 @@ public class BlockchainController {
         System.out.print(System.lineSeparator());
       }
       blockchain.getBlocks().add(block);
+      new User("miner%d".formatted(block.getMinerId()), 100);
     }
     if (blockchain.getBlocks().size() == AppConstants.NUMBER_OF_BLOCKS) {
       blockchain.setBlockchainFull(true);
+      System.exit(0);
     }
   }
 }

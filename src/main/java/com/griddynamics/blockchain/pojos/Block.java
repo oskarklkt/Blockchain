@@ -1,6 +1,6 @@
-package com.griddynamics.blockchain.block;
+package com.griddynamics.blockchain.pojos;
 
-import com.griddynamics.blockchain.constant.AppConstants;
+import com.griddynamics.blockchain.constants.OutputMessages;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +14,9 @@ public class Block {
   private final long timeStamp;
   private final String previousBlockHash;
   private final String hash;
-
   private final long magicNumber;
-
-  private long secondsToGenerate;
-
+  private final long secondsToGenerate;
+  // messages are set later - that's why it's not final
   private List<String> messages;
 
   public Block(
@@ -51,7 +49,8 @@ public class Block {
     }
     String data = stringBuilder.toString();
     return String.format(
-        AppConstants.BLOCK_TO_STRING,
+        OutputMessages.BLOCK_TO_STRING,
+        minerId,
         minerId,
         id,
         timeStamp,
