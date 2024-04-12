@@ -3,9 +3,9 @@ package com.griddynamics.blockchain.messages;
 import com.griddynamics.blockchain.pojos.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
 import com.griddynamics.blockchain.constants.AppConstants;
-import com.griddynamics.blockchain.constants.OutputMessages;
 import com.griddynamics.blockchain.pojos.User;
 import com.griddynamics.blockchain.validators.MessageValidator;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;
@@ -13,20 +13,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+@Getter
 public class Messenger implements Runnable {
-  public final static List<String> messages = Collections.synchronizedList(new ArrayList<>());
-  private static int messageNumber = 1;
+  @Getter
+  private static final List<String> messages = Collections.synchronizedList(new ArrayList<>());
+
+  private static final int SLEEP_DURATION = 40;
 
   @Override
   @SneakyThrows
   public void run() {
     while (!(Blockchain.getInstance().getBlocks().size() == AppConstants.NUMBER_OF_BLOCKS)) {
-      while (messageNumber < AppConstants.NUMBER_OF_MESSAGES) {
+      while (messages.size() < AppConstants.NUMBER_OF_MESSAGES) {
         User sender = null;
         User receiver = null;
         do {
-          // sleep to pass hyperskill tests
-          Thread.sleep(40);
+          //todo Awaitility
+          Thread.sleep(SLEEP_DURATION);
           int length = User.getUsers().size();
           if (length < 2) {
             continue;
@@ -41,17 +44,20 @@ public class Messenger implements Runnable {
         }
         Message message =
             new Message(
-                OutputMessages.GENERIC_MESSAGE.formatted(
-                    sender.getName(), amount, receiver.getName(), messageNumber++),
+                "%s sent %d VC to %s".formatted(sender.getName(), amount, receiver.getName()),
                 messages.size() + 1);
         MessageValidator messageValidator = new MessageValidator(message);
         if (messageValidator.validate()) {
-          messages.add(message.getMessageData());
+          addMessage(message.getMessageData());
           sender.decreaseVcAmount(amount);
           receiver.increaseVcAmount(amount);
         }
       }
     }
+  }
+
+  public static synchronized void addMessage(String messageData) {
+    messages.add(messageData);
   }
 
   public static synchronized void getMessages(Block block, List<String> usedMessages) {

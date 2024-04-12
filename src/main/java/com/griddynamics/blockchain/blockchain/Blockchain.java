@@ -11,8 +11,8 @@ import java.util.List;
 public class Blockchain {
   private final List<Block> blocks;
   private boolean isBlockchainFull = false;
-  private static Blockchain instance;
-  public int requiredTrailingZeros;
+  private static volatile Blockchain instance;
+  private int requiredTrailingZeros;
 
   private Blockchain() {
     this.blocks = new ArrayList<>();
@@ -21,7 +21,11 @@ public class Blockchain {
 
   public static Blockchain getInstance() {
     if (instance == null) {
-      instance = new Blockchain();
+      synchronized (Blockchain.class) {
+        if (instance == null) {
+          instance = new Blockchain();
+        }
+      }
     }
     return instance;
   }

@@ -16,7 +16,7 @@ public abstract class AppConstants {
   public static final Integer SECONDS_TO_GENERATE_INCREASE = 10;
   public static final Integer SECONDS_TO_GENERATE_DECREASE = 20;
 
-  public static final Integer NUMBER_OF_MINERS = 7;
+  public static final Integer NUMBER_OF_MINERS = 10;
 
   public static final Integer BARRIER = 4;
 

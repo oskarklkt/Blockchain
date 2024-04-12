@@ -12,18 +12,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
 @Setter
 public class Miner implements Runnable {
-  private static long numberOfMiners = 1;
   private final long id;
-  public final static List<String> usedMessages = new ArrayList<>();
   private final Blockchain blockchain;
   private final BlockchainController controller;
+  private static final List<String> usedMessages = new ArrayList<>();
+  private static final AtomicLong numberOfMiners = new AtomicLong(0);
 
   public Miner(BlockchainController controller, Blockchain blockchain) {
-    id = numberOfMiners++;
+    id = numberOfMiners.getAndAdd(1);
     this.blockchain = blockchain;
     this.controller = controller;
   }

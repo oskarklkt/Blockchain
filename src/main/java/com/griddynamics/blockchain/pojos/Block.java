@@ -1,6 +1,6 @@
 package com.griddynamics.blockchain.pojos;
 
-import com.griddynamics.blockchain.constants.OutputMessages;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Generated
 public class Block {
   private final long minerId;
   private final long id;
@@ -48,16 +49,30 @@ public class Block {
       }
     }
     String data = stringBuilder.toString();
-    return String.format(
-        OutputMessages.BLOCK_TO_STRING,
-        minerId,
-        minerId,
-        id,
-        timeStamp,
-        magicNumber,
-        previousBlockHash,
-        hash,
-        data,
-        secondsToGenerate);
+    return
+        """
+                  Block:
+                  Created by miner%d
+                  miner%d gets 100 VC
+                  Id: %d
+                  Timestamp: %d
+                  Magic number: %d
+                  Hash of the previous block:
+                  %s
+                  Hash of the block:
+                  %s
+                  Block data: %s
+                  Block was generating for %d seconds
+                  """
+        .formatted(
+            minerId,
+            minerId,
+            id,
+            timeStamp,
+            magicNumber,
+            previousBlockHash,
+            hash,
+            data,
+            secondsToGenerate);
   }
 }

@@ -2,9 +2,9 @@ package com.griddynamics.blockchain.messages;
 
 import com.griddynamics.blockchain.constants.AppConstants;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -15,7 +15,8 @@ public class KeyPair {
   private PrivateKey privateKey;
   private PublicKey publicKey;
 
-  public KeyPair() throws NoSuchAlgorithmException {
+  @SneakyThrows
+  public KeyPair() {
     this.keyGen = KeyPairGenerator.getInstance(AppConstants.KEY_GENERATOR_ALGORITHM);
     this.keyGen.initialize(AppConstants.KEY_LENGTH);
   }
