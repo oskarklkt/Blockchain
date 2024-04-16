@@ -1,4 +1,4 @@
-package com.griddynamics.blockchain.pojos;
+package com.griddynamics.blockchain.model;
 
 import lombok.Generated;
 import lombok.Getter;

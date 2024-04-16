@@ -2,7 +2,7 @@ package com.griddynamics.blockchain.messages;
 
 import com.griddynamics.blockchain.blockchain.Blockchain;
 
-import com.griddynamics.blockchain.pojos.User;
+import com.griddynamics.blockchain.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

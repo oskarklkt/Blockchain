@@ -1,6 +1,6 @@
 package com.griddynamics.blockchain.blockchain;
 
-import com.griddynamics.blockchain.pojos.Block;
+import com.griddynamics.blockchain.model.Block;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;

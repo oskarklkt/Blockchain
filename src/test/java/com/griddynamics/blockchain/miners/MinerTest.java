@@ -2,7 +2,7 @@ package com.griddynamics.blockchain.miners;
 
 import com.griddynamics.blockchain.blockchain.Blockchain;
 import com.griddynamics.blockchain.controllers.BlockchainController;
-import com.griddynamics.blockchain.pojos.Block;
+import com.griddynamics.blockchain.model.Block;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

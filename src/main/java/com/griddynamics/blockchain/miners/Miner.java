@@ -1,6 +1,6 @@
 package com.griddynamics.blockchain.miners;
 
-import com.griddynamics.blockchain.pojos.Block;
+import com.griddynamics.blockchain.model.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
 import com.griddynamics.blockchain.constants.AppConstants;
 import com.griddynamics.blockchain.controllers.BlockchainController;

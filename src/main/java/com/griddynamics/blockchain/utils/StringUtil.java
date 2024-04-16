@@ -2,9 +2,12 @@ package com.griddynamics.blockchain.utils;
 
 import com.griddynamics.blockchain.constants.AppConstants;
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+
 import java.security.MessageDigest;
 
-public abstract class StringUtil {
+@UtilityClass
+public class StringUtil {
 
   @SneakyThrows
   public static String applySha256(String input) {

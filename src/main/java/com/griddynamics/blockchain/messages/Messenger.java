@@ -1,9 +1,9 @@
 package com.griddynamics.blockchain.messages;
 
-import com.griddynamics.blockchain.pojos.Block;
+import com.griddynamics.blockchain.model.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
 import com.griddynamics.blockchain.constants.AppConstants;
-import com.griddynamics.blockchain.pojos.User;
+import com.griddynamics.blockchain.model.User;
 import com.griddynamics.blockchain.validators.MessageValidator;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -48,7 +48,7 @@ public class Messenger implements Runnable {
                 messages.size() + 1);
         MessageValidator messageValidator = new MessageValidator(message);
         if (messageValidator.validate()) {
-          addMessage(message.getMessageData());
+          addMessage( message.getMessageData());
           sender.decreaseVcAmount(amount);
           receiver.increaseVcAmount(amount);
         }

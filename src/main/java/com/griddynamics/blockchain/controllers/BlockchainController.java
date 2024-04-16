@@ -1,8 +1,8 @@
 package com.griddynamics.blockchain.controllers;
 
 import com.griddynamics.blockchain.messages.Messenger;
-import com.griddynamics.blockchain.pojos.User;
-import com.griddynamics.blockchain.pojos.Block;
+import com.griddynamics.blockchain.model.User;
+import com.griddynamics.blockchain.model.Block;
 import com.griddynamics.blockchain.blockchain.Blockchain;
 import com.griddynamics.blockchain.constants.AppConstants;
 import com.griddynamics.blockchain.validators.BlockchainValidator;
@@ -20,7 +20,6 @@ import java.util.List;
 public class BlockchainController {
   private final Blockchain blockchain;
   private final BlockchainValidator validator;
-  //todo move usedMessages and the whole logic somewhere else (SRP)
   public final static List<String> usedMessages = Collections.synchronizedList(new ArrayList<>());
 
   public synchronized void addNewBlock(Block block) {
